@@ -13,6 +13,5 @@ def fibonacci(n):
         fib_sequence.append(next_fib)
     return fib_sequence
 
-# Imprimir los primeros 50 números de la sucesión de Fibonacci
 fibonacci_50 = fibonacci(50)
 print(fibonacci_50)

@@ -10,3 +10,4 @@ cada impresión), sustituyendo los siguientes:
 
 for i in range(1, 101):
     print("".join([word for divisor, word in [(3, "fizz"), (5, "buzz")] if i % divisor == 0]) or i)
+    

@@ -5,12 +5,22 @@ sin usar funciones propias del lenguaje que lo hagan de forma automática.
 """
 
 def invertir_cadena(cadena):
-    invertida = ""
-    for caracter in cadena:
-        invertida = caracter + invertida
-    return invertida
+    """ 
+    Invierte el orden de una cadena de texto usando slicing.
 
-# Ejemplo de uso
-texto = "Hola mundo"
-texto_invertido = invertir_cadena(texto)
-print(texto_invertido)
+    Parámetros:
+    cadena (str): La cadena de texto a invertir.
+
+    Retorna:
+    str: La cadena invertida.
+    """
+    return cadena[::-1]
+
+def main():
+    texto = input("Ingrese una cadena de texto para invertir: ")
+    texto_invertido = invertir_cadena(texto)
+    print(f"La cadena invertida es: '{texto_invertido}")
+
+if __name__ == "__main__":
+    main()
+

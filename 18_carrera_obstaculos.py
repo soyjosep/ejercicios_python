@@ -10,36 +10,75 @@ Crea una función que evalúe si un/a atleta ha superado correctamente una carre
  - La función retornará un Boolean que indique si ha superado la carrera. Para ello tiene que realizar la opción correcta en cada tramo de la pista.
 """
 
-def evaluar_carrera(acciones, pista):
-    if len(acciones) != len(pista):
-        raise ValueError("La longitud de las  acciones y la pista debe ser la misma.")
-    
+import random
+
+def generar_pista(longitud):
+    """ 
+    Genera una pista aleatoria con "_" (suelo) y "|" (valla).
+
+    Parámetros:
+    longitud (int): La longitud de la pista.
+
+    Retorna:
+    str: Una pista aleatoria.
+    """
+    return ''.join(random.choice(["_", "|"]) for _ in range(longitud))
+
+def evaluar_carrera_usuario(pista):
+    """ 
+    Permite al usuario tomar decisiones en una carrera de obstáculos.
+    Evalúa si las decisiones son correctas y genera el resultado final.
+
+    Parámetros:
+    pista(str): La pista generada con "_" (suelo) y "|" (valla).
+
+    Retorna:
+    bool: True si el usuario supera la carrera, False en caso contrario.
+    """
     pista_modificada = list(pista)
     correcta = True
+    print("Pista generada: " + pista)
+    print("Instrucciones: Ingresa 'run' para suelo(_) o 'jump' para valla (|).\n")
 
     for i in range(len(pista)):
-        if acciones[i] == "run" and pista[i] == "_":
-            pass # Acción correcta, no cambia nada
-        elif acciones[i] == "jump" and pista[i] == "|":
-            pass # Acción correcta, no cambia nada
-        elif acciones[i] == "jump" and pista[i] == "_":
-            pista_modificada[i] = "x" # Acción incorrecta
+        print(f"Obstáculo {i + 1} ({pista[i]}):")
+        while True:
+            accion = input("¿Qué acción deseas realizar? (jump/run): ")
+            if accion in ["run", "jump"]:
+                break
+            print("Entrada inválida. Ingresa 'run' o 'jump'.")
+
+        if accion == "run" and pista[i] == "_":
+            pass    # Acción correcta
+        elif accion == "jump" and pista[i] == "|":
+            pass    # Acción correcta
+        elif accion == "jump" and pista[i] == "_":
+            pista_modificada[i] = "x"   # Acción incorrecta
             correcta = False
-        elif acciones[i] == "run" and pista[i] == "|":
+        elif accion == "run" and pista[i] == "|":
             pista_modificada[i] = "/" # Acción incorrecta
-            correcta = False
-        else:
-            raise ValueError("Acción o pista no válida.")
-        
-    print("Pista final: " + "".join(pista_modificada))
-    return correcta
+            correcta
 
-# Ejemplo de uso
-acciones = ["run", "jump", "run", "jump", "run"]
-pista = "_|_|_"
+def main():
+    print("¿Bienvenido/a a la carrera de obstáculos!")
+    while True:
+        try:
+            longitud = int(input("¿Cuántos obstáculos tendrá la pista? (Número entero): "))
+            if longitud <= 0:
+                print("La longitud debe ser un número positivo. Inténtalo de nuevo.")
+                continue
+            break
+        except ValueError:
+            print("Entrada inválida. Por favor, ingresa un número entero.")
 
-resultado = evaluar_carrera(acciones, pista)
-if resultado:
-    print("El/la atleta ha superado la carrera correctamente.")
-else:
-    print("El/la atleta no ha superado la carrera.")
+    pista = generar_pista(longitud)
+    resultado = evaluar_carrera_usuario(pista)
+
+    if resultado:
+        print("\n¿Felicidades! Has superado la carrera correctamente.")
+    else:
+        print("\nNo lograste superar la carrera. ¡Inténtalo de nuevo!")
+
+if __name__ == "__main__":
+    main()
+
